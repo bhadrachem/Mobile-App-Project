@@ -1,12 +1,15 @@
 package com.example.bhadraother.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 
 import java.util.ArrayList;
+
+import xyz.klinker.android.article.ArticleIntent;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Article> articles;
@@ -20,5 +23,12 @@ public class MainActivity extends AppCompatActivity {
     public void testGPS(View view) {
         Intent intent = new Intent(this, GPSActivity.class);
         startActivity(intent);
+    }
+    public void openArticle(View view){
+        ArticleIntent intent = new ArticleIntent.Builder(this, "7dd79f0f8c798222747d06c5dd39e308")
+                .setToolbarColor(0)
+                .build();
+
+        intent.launchUrl(this, Uri.parse("http://wuvanews.com/2018/04/16/news/former-nfl-player-and-lgbtq-activist-michael-sam-speaks-at-mcleod-hall/"));
     }
 }
