@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/thai"
+                android:src="@mipmap/michael"
                 android:onClick="openArticle"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,14 +34,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="@string/card_title"
+                    android:text="Former NFL Player and LGBTQ Activist Michael Sam Speaks at McLeod Hall"
                     android:textColor="#000"
                     android:textSize="18sp" />
                 <TextView
                     android:id="@+id/author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_content"
+                    android:text="Aurora Calderone - April 16, 2018"
                     android:textColor="#999" />
             </LinearLayout>
             <LinearLayout
@@ -55,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/action_share"
+                    android:onClick="shareArticle"
                     android:theme="@style/PrimaryFlatButton" />
                 <Button
                     android:id="@+id/save"
