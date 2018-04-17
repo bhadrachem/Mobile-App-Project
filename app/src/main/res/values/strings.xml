@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">WUVA News</string>
+    <string name="action_share">SHARE</string>
+    <string name="action_save">SAVE</string>
+    <string name="card_title">Silk Thai Review</string>
+    <string name="card_content">Kevin Vellanki - 4.16.2018</string>
 </resources>
