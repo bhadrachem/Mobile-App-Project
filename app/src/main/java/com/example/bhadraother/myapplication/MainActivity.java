@@ -24,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GPSActivity.class);
         startActivity(intent);
     }
+    public void shareArticle(View view){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing URL");
+        intent.putExtra(Intent.EXTRA_TEXT, "http://wuvanews.com/2018/04/16/news/former-nfl-player-and-lgbtq-activist-michael-sam-speaks-at-mcleod-hall/");
+        startActivity(Intent.createChooser(intent, "Share URL"));
+    }
     public void openArticle(View view){
         ArticleIntent intent = new ArticleIntent.Builder(this, "7dd79f0f8c798222747d06c5dd39e308")
                 .setToolbarColor(0)
