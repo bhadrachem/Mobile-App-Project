@@ -24,7 +24,7 @@ public class Settings extends Activity implements OnClickListener
                 .getLaunchIntentForPackage( getBaseContext().getPackageName() );
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor edit = sp.edit();
+        edit = sp.edit();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         mDrawerLayout = findViewById(R.id.drawer_layout);
