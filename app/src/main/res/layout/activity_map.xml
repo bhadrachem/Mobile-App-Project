@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/bodyText"
             android:paddingTop="16dp"
-            android:text="Submit Event"
+            android:text="Report Event"
             android:onClick="sendReport"
             android:layout_width="fill_parent">
         </Button>
