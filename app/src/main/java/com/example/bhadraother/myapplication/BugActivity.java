@@ -46,7 +46,7 @@ public class BugActivity extends AppCompatActivity {
             receiveReply = "No";
         }
 
-        if (subjectText == "" || emailText == "" || bodyText == "") {
+        if (subjectText.equals("") || emailText.equals("") || bodyText.equals("")) {
             Snackbar.make(view, "Please fill in all the fields!", Snackbar.LENGTH_LONG).show();
         }
         else {
