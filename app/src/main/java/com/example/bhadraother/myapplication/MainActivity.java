@@ -93,6 +93,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             refreshArticles();
         }
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+                MyAlertDialogFragment alert = new MyAlertDialogFragment();
+                alert.show(getSupportFragmentManager(), "Alert");
+            }
+        });
+
         setAdapter(articles);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -125,19 +139,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
-                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mShakeDetector = new ShakeDetector();
-        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
-
-            @Override
-            public void onShake(int count) {
-                MyAlertDialogFragment alert = new MyAlertDialogFragment();
-                alert.show(getSupportFragmentManager(), "Alert");
-            }
-        });
     }
     public void testGPS(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
