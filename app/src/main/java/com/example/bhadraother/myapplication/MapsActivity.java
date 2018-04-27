@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,6 +39,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Double currentLat;
     Double currentLon;
 
+    EditText subject;
+    EditText body;
+    String subjectText;
+    String bodyText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        subject = (EditText) findViewById(R.id.subjectText);
+        body = (EditText) findViewById(R.id.bodyText);
     }
 
 
@@ -179,6 +188,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
 
+    }
+
+    public void sendReport() {
+        subjectText = subject.getText().toString();
+        bodyText = body.getText().toString();
+        // send subjectText
     }
 
 }
