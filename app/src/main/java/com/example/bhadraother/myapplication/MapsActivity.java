@@ -44,7 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -141,9 +141,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             currentLat = -1.0;
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(mLastKnownLocation.getLatitude(),
-                        mLastKnownLocation.getLongitude()), 15));
+        LatLng current = new LatLng(currentLat, currentLon);
+        mMap.addMarker(new MarkerOptions().position(current).title("current"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+
 
         locationListener = new LocationListener() {
             @Override
@@ -156,9 +157,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     currentLon = -1.0;
                     currentLat = -1.0;
                 }
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(mLastKnownLocation.getLatitude(),
-                                mLastKnownLocation.getLongitude()), 15));
+                LatLng current = new LatLng(currentLat, currentLon);
+                mMap.addMarker(new MarkerOptions().position(current).title("current"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
 
             }
 
