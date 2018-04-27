@@ -13,6 +13,7 @@ import xyz.klinker.android.article.ArticleIntent;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Article> articles;
+    ArrayList<Article> savedArticles;
     CardView articleView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         intent.launchUrl(this, Uri.parse("http://wuvanews.com/2018/04/16/news/former-nfl-player-and-lgbtq-activist-michael-sam-speaks-at-mcleod-hall/"));
+    }
+    public void refreshArticles(View view){
+
     }
 }
