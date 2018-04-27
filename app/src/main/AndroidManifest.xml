@@ -20,14 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-        <activity
-            android:name=".GPSActivity"
-            android:label="GPS"
-            android:parentActivityName=".MainActivity" />
-
->>>>>>> 77e544ae3251730a9a60fe415e77fffe98a66f81
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

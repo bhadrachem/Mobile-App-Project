@@ -24,7 +24,7 @@ public class BugActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gps);
+        setContentView(R.layout.activity_bug);
 
         subject = (EditText) findViewById(R.id.subjectText2);
         email = (EditText) findViewById(R.id.emailText);

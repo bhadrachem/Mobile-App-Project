@@ -62,7 +62,19 @@ public class ArticleViewAdapter extends
         final Article item = Items.get(position);
         // Set item views based on your views and data model
         viewHolder.Title.setText(item.getTitle());
+        viewHolder.Title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openArticle(v, position);
+            }
+        });
         viewHolder.AuthorDate.setText(item.getAuthor()+" - "+item.getDate());
+        viewHolder.AuthorDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openArticle(v, position);
+            }
+        });
         viewHolder.Preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
