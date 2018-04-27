@@ -7,18 +7,24 @@ import java.util.Date;
  */
 
 public class Article {
+    private double id;
     private String title;
     private String author;
     private String date;
     private String url;
+    private String previewURL;
     private boolean saved;
-    Article(String title,String author,String date,boolean saved,String url){
+    Article(double id, String title,String author,String date,boolean saved,String url,String previewURL){
+        this.id = id;
         this.title = title;
         this.author = author;
         this.date = date;
         this.saved = saved;
         this.url = url;
+        this.previewURL = previewURL;
+
     }
+    double getId(){return id;}
     String getTitle(){
         return title;
     }
@@ -31,5 +37,7 @@ public class Article {
     String getURL(){
         return url;
     }
+    String getPreviewURL(){return previewURL;}
     boolean isSaved() {return saved;}
+    void setSaved(boolean saved){this.saved=saved;}
 }

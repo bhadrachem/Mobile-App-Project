@@ -24,8 +24,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#ffffff"
-            android:padding="16dp"
-            android:onClick="openArticle">
+            android:padding="16dp">
             <TextView
                 android:id="@+id/article_title"
                 android:layout_width="match_parent"
