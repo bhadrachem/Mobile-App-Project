@@ -20,6 +20,9 @@
         <activity android:name=".GPSActivity"
             android:label="GPS"
             android:parentActivityName="com.example.bhadraother.myapplication.MainActivity"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
         <activity android:name=".MapsActivity"
             android:label="Maps"
             android:parentActivityName="com.example.bhadraother.myapplication.MainActivity"/>

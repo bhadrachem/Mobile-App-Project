@@ -8,8 +8,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import java.sql.Date;
 import java.util.ArrayList;
 
 import xyz.klinker.android.article.ArticleIntent;
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rvArticles = (RecyclerView) findViewById(R.id.recyclerview);
-        articles.add(0, new Article("Dope Dope","Yo Mama", "12.2.2017","http://wuvanews.com/2018/04/16/news/former-nfl-player-and-lgbtq-activist-michael-sam-speaks-at-mcleod-hall/"));
+        articles.add(new Article("Dope Dope","Yo Mama", "12.2.2017","http://wuvanews.com/2018/04/16/news/former-nfl-player-and-lgbtq-activist-michael-sam-speaks-at-mcleod-hall/"));
         adapter = new ArticleViewAdapter(this,articles);
         rvArticles.setAdapter(adapter);
         rvArticles.setLayoutManager(new LinearLayoutManager(this));
