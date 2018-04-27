@@ -3,6 +3,7 @@ package com.example.bhadraother.myapplication;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -51,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        getLocationPermission();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -194,7 +196,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void sendReport(View view) {
         subjectText = subject.getText().toString();
         bodyText = body.getText().toString();
-        // send subjectText
+        // send subjectText, bodyText, latitude, and lon
+
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 }
