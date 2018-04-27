@@ -7,11 +7,11 @@ import java.util.Date;
  */
 
 public class Article {
-    String title;
-    String author;
-    String date;
-    String url;
-    boolean saved;
+    private String title;
+    private String author;
+    private String date;
+    private String url;
+    private boolean saved;
     Article(String title,String author,String date,boolean saved,String url){
         this.title = title;
         this.author = author;

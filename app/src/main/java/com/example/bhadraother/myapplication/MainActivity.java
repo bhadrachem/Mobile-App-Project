@@ -9,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.ArrayList;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 
 import xyz.klinker.android.article.ArticleIntent;
@@ -38,38 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
-    public void shareArticle(View view){
-        int index = LoadInt("index");
-        String url = articles.get(index).getURL();
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing URL");
-        intent.putExtra(Intent.EXTRA_TEXT, url);
-        startActivity(Intent.createChooser(intent, "Share URL"));
-    }
-    public void openArticle(View view){
-        ArticleIntent intent = new ArticleIntent.Builder(this, "7dd79f0f8c798222747d06c5dd39e308")
-                .setToolbarColor(0)
-                .build();
-        int index = LoadInt("index");
-        String url = articles.get(index).getURL();
-        intent.launchUrl(this, Uri.parse(url));
-    }
-    public void save(View view){
-        savedArticles.add(articles.get(LoadInt("index")));
-    }
     public void refreshArticles(View view){
 
-    }
-    public void SaveInt(String key, int value){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(key, value);
-        editor.commit();
-    }
-    public int LoadInt(String key){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int savedValue = sharedPreferences.getInt("key", 0);
-        return savedValue;
     }
 }
