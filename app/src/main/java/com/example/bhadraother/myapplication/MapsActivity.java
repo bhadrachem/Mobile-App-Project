@@ -32,7 +32,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location tempLocation;
     LocationManager locationManager;
     LocationListener locationListener;
-    private static final int TAKE_PHOTO_PERMISSION = 1;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     Double currentLat;

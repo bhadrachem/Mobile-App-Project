@@ -9,12 +9,24 @@ import java.util.Date;
 public class Article {
     String title;
     String author;
-    Date date;
+    String date;
     String url;
-    Article(String title,String author,Date date,String url){
+    Article(String title,String author,String date,String url){
         this.title = title;
         this.author = author;
         this.date = date;
         this.url = url;
+    }
+    String getTitle(){
+        return title;
+    }
+    String getAuthor(){
+        return author;
+    }
+    String getDate(){
+        return date;
+    }
+    String getURL(){
+        return url;
     }
 }

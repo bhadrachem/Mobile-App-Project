@@ -30,14 +30,14 @@
             android:padding="16dp"
             android:onClick="openArticle">
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/article_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:textColor="#000"
                 android:textSize="18sp" />
             <TextView
-                android:id="@+id/author"
+                android:id="@+id/article_authordate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#999" />
