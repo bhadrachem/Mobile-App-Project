@@ -5,4 +5,7 @@
     <string name="card_title">Silk Thai Review</string>
     <string name="card_content">Kevin Vellanki - 4.16.2018</string>
     <integer name="index">0</integer>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
