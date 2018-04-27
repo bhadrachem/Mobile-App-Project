@@ -225,7 +225,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         subjectText = subject.getText().toString();
         bodyText = body.getText().toString();
 
-        if (subjectText == "" || bodyText == "") {
+        if (subjectText.equals("") || bodyText.equals("")) {
             Snackbar.make(view, "Please fill in all the fields!", Snackbar.LENGTH_LONG).show();
         }
         else {

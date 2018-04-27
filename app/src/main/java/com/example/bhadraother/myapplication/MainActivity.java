@@ -1,7 +1,10 @@
 package com.example.bhadraother.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Map<String,Object>> Media;
     Map<String,Object> mapLinktoSource;
 
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +61,19 @@ public class MainActivity extends AppCompatActivity {
         rvArticles.setLayoutManager(new LinearLayoutManager(this));
         refreshArticles();
         setAdapter(articles);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+                MyAlertDialogFragment alert = new MyAlertDialogFragment();
+                alert.show(getSupportFragmentManager(), "Alert");
+            }
+        });
     }
     public void testGPS(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
@@ -108,5 +128,18 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ArticleViewAdapter(this,articles);
         rvArticles.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 }
