@@ -4,4 +4,5 @@
     <string name="action_save">SAVE</string>
     <string name="card_title">Silk Thai Review</string>
     <string name="card_content">Kevin Vellanki - 4.16.2018</string>
+    <integer name="index">0</integer>
 </resources>

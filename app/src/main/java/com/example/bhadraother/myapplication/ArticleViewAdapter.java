@@ -1,13 +1,14 @@
 package com.example.bhadraother.myapplication;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.List;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class ArticleViewAdapter extends
         RecyclerView.Adapter<ArticleViewAdapter.ViewHolder> {
@@ -15,11 +16,12 @@ public class ArticleViewAdapter extends
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView Title;
         public TextView AuthorDate;
+        public TextView Saved;
         public ViewHolder(View itemView) {
             super(itemView);
-
             Title = (TextView) itemView.findViewById(R.id.article_title);
-            AuthorDate = (TextView) itemView.findViewById(R.id.article_author);
+            AuthorDate = (TextView) itemView.findViewById(R.id.article_authordate);
+            Saved = (TextView) itemView.findViewById(R.id.save);
         }
     }
 
@@ -52,16 +54,40 @@ public class ArticleViewAdapter extends
     public void onBindViewHolder(ArticleViewAdapter.ViewHolder viewHolder, final int position) {
         // Get the data model based on position
         final Article item = Items.get(position);
-
         // Set item views based on your views and data model
         TextView textView = viewHolder.Title;
         TextView othertextView = viewHolder.AuthorDate;
         textView.setText(item.getTitle());
-        othertextView.setText(item.getAuthor() + " - " + item.getDate());
+        othertextView.setText(item.getAuthor());
+        if(item.isSaved()){
+            viewHolder.Saved.setText("Saved");
+        }
+        else{
+            viewHolder.Saved.setText("Save");
+        }
+/*
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                SaveInt("index",viewHolder.getAdapterPosition());
+            }
+        });
+*/
     }
 
     @Override
     public int getItemCount(){
         return Items.size();
+    }
+    public void SaveInt(String key, int value){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+    public int LoadInt(String key){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        int savedValue = sharedPreferences.getInt("key", 0);
+        return savedValue;
     }
 }

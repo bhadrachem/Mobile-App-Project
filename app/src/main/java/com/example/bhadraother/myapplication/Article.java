@@ -11,10 +11,12 @@ public class Article {
     String author;
     String date;
     String url;
-    Article(String title,String author,String date,String url){
+    boolean saved;
+    Article(String title,String author,String date,boolean saved,String url){
         this.title = title;
         this.author = author;
         this.date = date;
+        this.saved = saved;
         this.url = url;
     }
     String getTitle(){
@@ -29,4 +31,5 @@ public class Article {
     String getURL(){
         return url;
     }
+    boolean isSaved() {return saved;}
 }
