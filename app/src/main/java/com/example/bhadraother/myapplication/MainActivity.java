@@ -1,11 +1,17 @@
 package com.example.bhadraother.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
+    DatabaseHelper dbHelper;
+    long newRowId=-1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +68,13 @@ public class MainActivity extends AppCompatActivity {
         rvArticles = (RecyclerView) findViewById(R.id.recyclerview);
         articles = new ArrayList<Article>();
         rvArticles.setLayoutManager(new LinearLayoutManager(this));
-        refreshArticles();
+        dbHelper = new DatabaseHelper(this);
+        if (checkDataBase()) {
+            getAllData(articles);
+        }
+        else {
+            refreshArticles();
+        }
         setAdapter(articles);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -92,21 +107,22 @@ public class MainActivity extends AppCompatActivity {
                 gson = new Gson();
                 list = (List) gson.fromJson(s, List.class);
 
-                for(int i=0;i<list.size();++i) {
+                for (int i = 0; i < list.size(); ++i) {
                     mapPost = (Map<String, Object>) list.get(i);
-                    mapEmbed = (Map<String,Object>) mapPost.get("_embedded");
+                    mapEmbed = (Map<String, Object>) mapPost.get("_embedded");
                     mapTitle = (Map<String, Object>) mapPost.get("title");
                     Author = (ArrayList<Map<String, Object>>) mapEmbed.get("author");
-                    mapAuthorName = (Map<String,Object>) Author.get(0);
+                    mapAuthorName = (Map<String, Object>) Author.get(0);
                     String author = (String) mapAuthorName.get("name");
-                    Media = (ArrayList<Map<String,Object>>) mapEmbed.get("wp:featuredmedia");
+                    Media = (ArrayList<Map<String, Object>>) mapEmbed.get("wp:featuredmedia");
                     String htitle = (java.lang.String) mapTitle.get("rendered");
                     String title = htitle;
                     String date = (String) mapPost.get("date");
                     String url = (String) mapPost.get("link");
-                    mapMedia = (Map<String,Object>) Media.get(0);//(String) mapLinks.get("source_url");
+                    mapMedia = (Map<String, Object>) Media.get(0);//(String) mapLinks.get("source_url");
                     String previewURL = (String) mapMedia.get("link");
                     double id = (double) mapPost.get("id");
+                    saveToDB(title, author, url, date, id, previewURL);
                     Article article = new Article(id, title, author, date, true, url, previewURL);
                     if (!savedArticles.contains(article))
                         article.setSaved(false);
@@ -142,4 +158,90 @@ public class MainActivity extends AppCompatActivity {
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
     }
+    public void saveToDB(String title, String author, String url, String date, double id, String previewURL)  {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put("Title", title);
+        values.put("Author", author);
+        values.put("URL", url);
+        values.put("previewURL", previewURL);
+        values.put("Date", date);
+        values.put("Saved", 1);
+        values.put("id", id);
+
+        // Insert the new row, returning the primary key value of the new row
+        newRowId = db.insert("ArticleDB", null, values);
+    }
+
+    public void readFromDB() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                BaseColumns._ID,
+                "Title",
+                "Author",
+                "URL",
+                "previewURL",
+                "Date",
+                "Saved",
+                "id"
+        };
+
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                "id" + " DESC";
+
+        Cursor cursor = db.query(
+                "ArticleDB",   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+    }
+    public ArrayList<Article> getAllData (ArrayList<Article> articles) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + "ArticleDB", null);
+
+        while (res.moveToNext()) {
+            String title = res.getString(0);   //0 is the number of id column in your database table, it could be different in your database table
+            String author = res.getString(1);
+            String url = res.getString(2);
+            String previewURL = res.getString(3);
+            String date = res.getString(4);
+            int saved = res.getInt(5);
+            double id = res.getDouble(6);
+
+            boolean save = false;
+            if (saved == 1) {
+                save = true;
+            }
+
+            Article newArticle = new Article(id, title, author, date, save, url, previewURL);
+            articles.add(newArticle);
+        }
+
+        Toast.makeText(this, "This is a test 2!", Toast.LENGTH_SHORT).show();
+        return articles;
+    }
+
+    private boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            checkDB = SQLiteDatabase.openDatabase("ArticleDB", null,
+                    SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
+        } catch (SQLiteException e) {
+            // database doesn't exist yet.
+        }
+        return checkDB != null;
+    }
+
 }
