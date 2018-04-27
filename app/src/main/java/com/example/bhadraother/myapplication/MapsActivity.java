@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -218,11 +219,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void sendReport(View view) {
         subjectText = subject.getText().toString();
+        String report = "Report: " + subjectText;
         bodyText = body.getText().toString();
         // send subjectText
 
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, report);
+        intent.putExtra(Intent.EXTRA_TEXT, bodyText);
+        intent.setData(Uri.parse("mailto:suppusan@gmail.com")); // or just "mailto:" for blank
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+        startActivity(intent);
     }
 
 }
