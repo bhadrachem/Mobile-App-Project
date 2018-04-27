@@ -9,4 +9,5 @@ public class Article {
     String author="";
     String date="";
     String url="";
+
 }
