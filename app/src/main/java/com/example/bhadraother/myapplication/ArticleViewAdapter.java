@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
 import java.util.List;
 import xyz.klinker.android.article.ArticleIntent;
 
@@ -75,6 +78,7 @@ public class ArticleViewAdapter extends
                 openArticle(v, position);
             }
         });
+        UrlImageViewHelper.setUrlDrawable(viewHolder.Preview, item.getPreviewURL(), R.mipmap.placeholder);
         viewHolder.Preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
