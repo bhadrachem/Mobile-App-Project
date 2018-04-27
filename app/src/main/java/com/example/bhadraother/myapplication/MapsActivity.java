@@ -3,6 +3,7 @@ package com.example.bhadraother.myapplication;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        getLocationPermission();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -190,10 +193,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void sendReport() {
+    public void sendReport(View view) {
         subjectText = subject.getText().toString();
         bodyText = body.getText().toString();
-        // send subjectText
+        // send subjectText, bodyText, latitude, and lon
+
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 }

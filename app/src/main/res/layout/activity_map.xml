@@ -1,8 +1,46 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bhadraother.myapplication.MapsActivity" />
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <fragment
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        tools:context="com.example.bhadraother.myapplication.MapsActivity" />
+
+    <EditText
+        android:id="@+id/subjectText"
+        android:layout_below="@id/map"
+        android:paddingTop="16dp"
+        android:layout_height="wrap_content"
+        android:hint="Subject"
+        android:inputType="textShortMessage"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/bodyText"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subjectText"
+        android:paddingTop="16dp"
+        android:hint="Description of event"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bodyText"
+        android:paddingTop="16dp"
+        android:text="Submit Event"
+        android:onClick="sendReport"
+        android:layout_width="fill_parent">
+    </Button>
+
+</RelativeLayout>
