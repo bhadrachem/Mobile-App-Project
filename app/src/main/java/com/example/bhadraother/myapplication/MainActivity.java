@@ -123,24 +123,25 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
-                        Intent intent = null;
+                        Intent i = null;
                         String item = (String) menuItem.getTitle();
                         switch (item) {
                             case "All Stories":
-                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                                i = new Intent(getApplicationContext(), MainActivity.class);
                                 break;
                             case "Settings":
-                                intent = new Intent(getApplicationContext(), Settings.class);
+                                i = new Intent(getApplicationContext(), Settings.class);
                                 break;
                             case "Send in a Tip":
-                                intent = new Intent(getApplicationContext(), MapsActivity.class);
+                                i = new Intent(getApplicationContext(), MapsActivity.class);
+                                break;
                             case "Shake or Tap to Send Feedback":
-                                intent = new Intent(getApplicationContext(), BugActivity.class);
+                                i = new Intent(getApplicationContext(), BugActivity.class);
                                 break;
                             default:
-                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                                i = new Intent(getApplicationContext(), MainActivity.class);
                         }
-                        startActivity(intent);
+                        startActivity(i);
                         return true;
                     }
                 });
@@ -222,13 +223,16 @@ public class MainActivity extends AppCompatActivity {
         values.put("Title", title);
         values.put("Author", author);
         values.put("URL", url);
-        values.put("previewURL", previewURL);
         values.put("Date", date);
-        values.put("Saved", 1);
         values.put("id", id);
+        values.put("previewURL", previewURL);
+        values.put("Saved", 1);
 
         // Insert the new row, returning the primary key value of the new row
-        newRowId = db.insert("ArticleDB", null, values);
+        newRowId = db.insert(
+                "ArticleDB",
+                null,
+                values);
     }
 
     public void readFromDB() {
@@ -241,10 +245,10 @@ public class MainActivity extends AppCompatActivity {
                 "Title",
                 "Author",
                 "URL",
-                "previewURL",
                 "Date",
-                "Saved",
-                "id"
+                "id",
+                "previewURL",
+                "Saved"
         };
 
         // How you want the results sorted in the resulting Cursor
@@ -269,10 +273,10 @@ public class MainActivity extends AppCompatActivity {
             String title = res.getString(0);   //0 is the number of id column in your database table, it could be different in your database table
             String author = res.getString(1);
             String url = res.getString(2);
-            String previewURL = res.getString(3);
-            String date = res.getString(4);
-            int saved = res.getInt(5);
-            double id = res.getDouble(6);
+            String date = res.getString(3);
+            double id = res.getDouble(4);
+            String previewURL = res.getString(5);
+            int saved = res.getInt(6);
 
             boolean save = false;
             if (saved == 1) {
