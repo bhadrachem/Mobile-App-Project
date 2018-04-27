@@ -1,5 +1,9 @@
 package com.example.bhadraother.myapplication;
 
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -18,11 +22,24 @@ public class Article {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.date = date;
+        this.date = dateFormat(date);
         this.saved = saved;
         this.url = url;
         this.previewURL = previewURL;
 
+    }
+    private String dateFormat(String date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
+        String out="";
+        try {
+            Date date2 = dateFormat.parse(date);
+
+            out = dateFormat2.format(date2);
+            Log.e("Time", out);
+        } catch (ParseException e) {
+        }
+        return out;
     }
     double getId(){return id;}
     String getTitle(){

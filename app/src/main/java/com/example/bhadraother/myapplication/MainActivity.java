@@ -7,12 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
-
+import java.lang.String;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ArticleViewAdapter adapter;
     ArrayList<Article> savedArticles = new ArrayList<Article>();
     List<Object> list;
-    String wuvaurl = "http://wuvanews.com/wp-json/wp/v2/posts?filter[posts_per_page]=10";
+    String wuvaurl = "http://wuvanews.com/wp-json/wp/v2/posts?filter[posts_per_page]=10&_embed=true";
     Gson gson;
     ProgressDialog progressDialog;
     Map<String,Object> mapPost;
@@ -50,11 +48,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         rvArticles = (RecyclerView) findViewById(R.id.recyclerview);
         articles = new ArrayList<Article>();
-        adapter = new ArticleViewAdapter(this,articles);
-        rvArticles.setAdapter(adapter);
         rvArticles.setLayoutManager(new LinearLayoutManager(this));
         refreshArticles();
-        rvArticles.invalidate();
+        setAdapter(articles);
     }
     public void testGPS(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
@@ -78,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     //mapAuthor = (Map<String, Object>) mapPost.get("author");
                     //mapAuthorName = (Map<String, Object>) mapAuthor.get(0);
                     //mapLinks = (Map<String, Object>) mapPost.get("wp:featuredmedia");
-                    String title = (String) mapTitle.get("rendered");
+                    String htitle = (java.lang.String) mapTitle.get("rendered");
+                    String title = htitle;
                     String date = (String) mapPost.get("date");
                     String url = (String) mapPost.get("link");
                     //mapLinktoSource = (Map<String, Object>) mapLinks.get(0);
@@ -100,7 +97,11 @@ public class MainActivity extends AppCompatActivity {
         });
         RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
         rQueue.add(request);
+        setAdapter(articles);
+    }
+    public void setAdapter(ArrayList<Article> articles){
+        adapter = new ArticleViewAdapter(this,articles);
+        rvArticles.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        rvArticles.invalidate();
     }
 }
