@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Holo" parent="@android:style/Theme.Material">
+        <!--<item name="android:windowBackground">@color/initial_background_grey</item>-->
+        <!--<item name="android:actionBarStyle">@style/MyActionBar</item>-->
+        <item name="android:windowDisablePreview">true</item>
+
+    </style>
+    <style name="MaterialDark" parent="@android:style/Theme.Material">
+    </style>
+    <style name="Material" parent="android:Theme.Holo">
+    </style>
+</resources>

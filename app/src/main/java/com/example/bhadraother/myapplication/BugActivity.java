@@ -2,9 +2,12 @@ package com.example.bhadraother.myapplication;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,7 +25,7 @@ public class BugActivity extends AppCompatActivity {
     String emailText;
     String bodyText;
     String receiveReply;
-
+    private DrawerLayout mDrawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,37 @@ public class BugActivity extends AppCompatActivity {
         body = (EditText) findViewById(R.id.bodyText2);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
         submit = (Button) findViewById(R.id.submitButton2);
-    }
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+                        Intent intent = null;
+                        String item = (String) menuItem.getTitle();
+                        switch (item) {
+                            case "All Stories":
+                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                                break;
+                            case "Settings":
+                                intent = new Intent(getApplicationContext(), Settings.class);
+                                break;
+                            case "Send in a Tip":
+                                intent = new Intent(getApplicationContext(), MapsActivity.class);
+                            case "Shake or Tap to Send Feedback":
+                                intent = new Intent(getApplicationContext(), BugActivity.class);
+                                break;
+                            default:
+                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                        }
+                        startActivity(intent);
+                        return true;
+                    }
+                });    }
 
     public void sendBug(View view) {
         subjectText = subject.getText().toString();

@@ -15,15 +15,18 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -57,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         subject = (EditText) findViewById(R.id.subjectText);
         body = (EditText) findViewById(R.id.bodyText);
-
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+                        Intent intent = null;
+                        String item = (String) menuItem.getTitle();
+                        switch (item) {
+                            case "All Stories":
+                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                                break;
+                            case "Settings":
+                                intent = new Intent(getApplicationContext(), Settings.class);
+                                break;
+                            case "Send in a Tip":
+                                intent = new Intent(getApplicationContext(), MapsActivity.class);
+                            case "Shake or Tap to Send Feedback":
+                                intent = new Intent(getApplicationContext(), BugActivity.class);
+                                break;
+                            default:
+                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                        }
+                        startActivity(intent);
+                        return true;
+                    }
+                });
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
