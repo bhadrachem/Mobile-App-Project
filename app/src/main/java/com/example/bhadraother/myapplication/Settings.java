@@ -22,7 +22,6 @@ public class Settings extends Activity implements OnClickListener
     {
         i = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor edit = sp.edit();
