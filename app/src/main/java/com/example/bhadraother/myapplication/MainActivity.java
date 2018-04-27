@@ -36,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
     Gson gson;
     ProgressDialog progressDialog;
     Map<String,Object> mapPost;
+    Map<String,Object> mapEmbed;
     Map<String,Object> mapTitle;
+    Map<String,Object> mapMedia;
     Map<String,Object> mapAuthor;
+    ArrayList<Map<String,Object>> Author;
     Map<String,Object> mapAuthorName;
-    Map<String,Object> mapLinks;
+    ArrayList<Map<String,Object>> Media;
     Map<String,Object> mapLinktoSource;
 
     @Override
@@ -65,29 +68,31 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, wuvaurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                progressDialog.dismiss();
                 gson = new Gson();
                 list = (List) gson.fromJson(s, List.class);
 
                 for(int i=0;i<list.size();++i) {
                     mapPost = (Map<String, Object>) list.get(i);
+                    mapEmbed = (Map<String,Object>) mapPost.get("_embedded");
                     mapTitle = (Map<String, Object>) mapPost.get("title");
-                    //mapAuthor = (Map<String, Object>) mapPost.get("author");
-                    //mapAuthorName = (Map<String, Object>) mapAuthor.get(0);
-                    //mapLinks = (Map<String, Object>) mapPost.get("wp:featuredmedia");
+                    Author = (ArrayList<Map<String, Object>>) mapEmbed.get("author");
+                    mapAuthorName = (Map<String,Object>) Author.get(0);
+                    String author = (String) mapAuthorName.get("name");
+                    Media = (ArrayList<Map<String,Object>>) mapEmbed.get("wp:featuredmedia");
                     String htitle = (java.lang.String) mapTitle.get("rendered");
                     String title = htitle;
                     String date = (String) mapPost.get("date");
                     String url = (String) mapPost.get("link");
-                    //mapLinktoSource = (Map<String, Object>) mapLinks.get(0);
-                    String previewURL = "a string";//(String) mapLinks.get("source_url");
-                    String author = "Genus of the Species";//(String) mapAuthorName.get("name");
+                    mapMedia = (Map<String,Object>) Media.get(0);//(String) mapLinks.get("source_url");
+                    String previewURL = (String) mapMedia.get("link");
                     double id = (double) mapPost.get("id");
                     Article article = new Article(id, title, author, date, true, url, previewURL);
                     if (!savedArticles.contains(article))
                         article.setSaved(false);
                     articles.add(article);
                 }
-                progressDialog.dismiss();
+                setAdapter(articles);
             }
         }, new Response.ErrorListener() {
             @Override

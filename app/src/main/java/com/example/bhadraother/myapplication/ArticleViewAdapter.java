@@ -110,7 +110,7 @@ public class ArticleViewAdapter extends
     }
     public void openArticle(View view, int index){
         ArticleIntent intent = new ArticleIntent.Builder(getContext(), "7dd79f0f8c798222747d06c5dd39e308")
-                .setToolbarColor(0)
+                .setToolbarColor(getContext().getResources().getColor(R.color.colorPrimary,getContext().getTheme()))
                 .build();
         String url = Items.get(index).getURL();
         intent.launchUrl(getContext(), Uri.parse(url));
