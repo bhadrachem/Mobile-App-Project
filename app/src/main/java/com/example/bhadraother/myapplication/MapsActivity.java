@@ -3,6 +3,7 @@ package com.example.bhadraother.myapplication;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -14,12 +15,15 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
@@ -219,17 +223,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void sendReport(View view) {
         subjectText = subject.getText().toString();
-        String report = "Report: " + subjectText;
         bodyText = body.getText().toString();
-        // send subjectText
 
-        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, report);
-        intent.putExtra(Intent.EXTRA_TEXT, bodyText);
-        intent.setData(Uri.parse("mailto:suppusan@gmail.com")); // or just "mailto:" for blank
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
-        startActivity(intent);
+        if (subjectText == "" || bodyText == "") {
+            Snackbar.make(view, "Please fill in all the fields!", Snackbar.LENGTH_LONG).show();
+        }
+        else {
+            String report = "Report: " + subjectText;
+            Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, report);
+            intent.putExtra(Intent.EXTRA_TEXT, bodyText);
+            intent.setData(Uri.parse("mailto:suppusan@gmail.com")); // or just "mailto:" for blank
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+            startActivity(intent);
+        }
     }
 
 }

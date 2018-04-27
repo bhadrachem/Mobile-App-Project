@@ -2,6 +2,7 @@ package com.example.bhadraother.myapplication;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,24 +40,28 @@ public class BugActivity extends AppCompatActivity {
         emailText = email.getText().toString();
         bodyText = body.getText().toString();
         if (checkBox.isChecked()) {
-            receiveReply = "Expects reply.";
+            receiveReply = "Yes";
         }
         else {
-            receiveReply = "No reply required.";
+            receiveReply = "No";
         }
-        String complete_data = subjectText + ", " + emailText + ", " + bodyText + ", " + receiveReply;
-        // send this info somewhere
 
-        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Bug Report Test");
-        intent.putExtra(Intent.EXTRA_TEXT, complete_data);
-        intent.setData(Uri.parse("mailto:suppusan@gmail.com")); // or just "mailto:" for blank
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
-        startActivity(intent);
+        if (subjectText == "" || emailText == "" || bodyText == "") {
+            Snackbar.make(view, "Please fill in all the fields!", Snackbar.LENGTH_LONG).show();
+        }
+        else {
+            String complete_data = "Subject: " + subjectText + '\n' + "Email: " + emailText
+                    + '\n' + "Description: " + bodyText + '\n' + "Reply expected? " + receiveReply;
+            // send this info somewhere
 
-//        Intent i = new Intent(this, MainActivity.class);
-//        startActivity(i);
+            Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Bug Report Test");
+            intent.putExtra(Intent.EXTRA_TEXT, complete_data);
+            intent.setData(Uri.parse("mailto:suppusan@gmail.com")); // or just "mailto:" for blank
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+            startActivity(intent);
+        }
     }
 
 }
