@@ -23,7 +23,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
+        <activity
+            android:name=".Settings"
+            android:label="Report Event"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MapsActivity"
             android:label="Report Event"
