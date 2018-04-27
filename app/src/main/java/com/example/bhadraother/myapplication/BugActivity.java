@@ -1,6 +1,7 @@
 package com.example.bhadraother.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ public class BugActivity extends AppCompatActivity {
     String subjectText;
     String emailText;
     String bodyText;
-    boolean receiveReply;
+    String receiveReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +39,24 @@ public class BugActivity extends AppCompatActivity {
         emailText = email.getText().toString();
         bodyText = body.getText().toString();
         if (checkBox.isChecked()) {
-            receiveReply = true;
+            receiveReply = "Expects reply.";
         }
         else {
-            receiveReply = false;
+            receiveReply = "No reply required.";
         }
+        String complete_data = subjectText + ", " + emailText + ", " + bodyText + ", " + receiveReply;
         // send this info somewhere
 
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Bug Report Test");
+        intent.putExtra(Intent.EXTRA_TEXT, complete_data);
+        intent.setData(Uri.parse("mailto:suppusan@gmail.com")); // or just "mailto:" for blank
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+        startActivity(intent);
+
+//        Intent i = new Intent(this, MainActivity.class);
+//        startActivity(i);
     }
 
 }
